@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next"
 import { Fraunces } from "next/font/google"
 import { Analytics } from "@/components/Analytics"
+import { Analytics as VercelAnalytics } from "@vercel/analytics/next"
 import { RevealObserver } from "@/components/Reveal"
 import { Footer } from "@/components/layout/Footer"
 import { Header } from "@/components/layout/Header"
@@ -63,6 +64,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <WhatsAppFloat />
         <RevealObserver />
         <Analytics />
+        <VercelAnalytics />
       </body>
     </html>
   )
