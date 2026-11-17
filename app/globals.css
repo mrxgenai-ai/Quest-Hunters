@@ -1,0 +1,134 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+/*
+ * Draw the rupee sign (₹, U+20B9) with the device's own font. It isn't in the
+ * Latin subset, so without this the browser downloads two extra "latin-ext"
+ * font files just for one character, which delays the first render on mobile.
+ */
+@font-face {
+  font-family: "Rupee";
+  src: local("Roboto"), local("SF Pro Text"), local(".SF NS"), local("Segoe UI"), local("Noto Sans"), local("Helvetica Neue"), local("Arial");
+  unicode-range: U+20B9;
+}
+
+@theme inline {
+  --font-sans: "Rupee", var(--font-geist), ui-sans-serif, system-ui, sans-serif;
+  --font-heading: "Rupee", var(--font-fraunces), Georgia, serif;
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  /* Brand */
+  --color-brand: var(--brand);
+  --color-brand-strong: var(--brand-strong);
+  --color-brand-soft: var(--brand-soft);
+  --color-ink: var(--ink);
+  --color-veg: #15803d;
+  --color-nonveg: #b91c1c;
+  --color-whatsapp: #25d366;
+
+  --radius-sm: calc(var(--radius) * 0.5);
+  --radius-md: calc(var(--radius) * 0.75);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.25);
+  --radius-2xl: calc(var(--radius) * 1.5);
+  --radius-3xl: calc(var(--radius) * 2);
+}
+
+:root {
+  --background: #faf7f2;
+  --foreground: #1c1917;
+  --card: #ffffff;
+  --card-foreground: #1c1917;
+  --popover: #ffffff;
+  --popover-foreground: #1c1917;
+  --primary: #c2410c;
+  --primary-foreground: #ffffff;
+  --secondary: #f3eee6;
+  --secondary-foreground: #1c1917;
+  --muted: #f3eee6;
+  --muted-foreground: #57534e;
+  --accent: #ffedd5;
+  --accent-foreground: #7c2d12;
+  --destructive: #b91c1c;
+  --border: #e7e1d8;
+  --input: #d6cfc4;
+  --ring: #c2410c;
+
+  --brand: #c2410c;
+  --brand-strong: #9a3412;
+  --brand-soft: #ffedd5;
+  --ink: #1c1917;
+
+  --radius: 1rem;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  html {
+    @apply scroll-smooth font-sans antialiased;
+    -webkit-tap-highlight-color: transparent;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  h1,
+  h2,
+  h3 {
+    @apply font-heading text-balance;
+    font-optical-sizing: auto;
+    letter-spacing: -0.015em;
+  }
+  :focus-visible {
+    outline: 3px solid var(--ring);
+    outline-offset: 2px;
+  }
+  /* Offset anchor targets below the sticky header. */
+  [id] {
+    scroll-margin-top: 5rem;
+  }
+}
+
+/* Scroll reveal (see components/Reveal.tsx). Content stays visible without JS. */
+.reveal-ready [data-reveal] {
+  opacity: 0;
+  transform: translateY(16px);
+  transition:
+    opacity 0.6s ease,
+    transform 0.6s ease;
+}
+.reveal-ready [data-reveal].is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .reveal-ready [data-reveal] {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
