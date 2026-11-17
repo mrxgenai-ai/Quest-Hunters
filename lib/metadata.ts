@@ -5,7 +5,7 @@ export const ogImage = {
   url: "/og.png",
   width: 1200,
   height: 630,
-  alt: `${siteConfig.name}: websites for restaurants, cafes and resorts in Chhatrapati Sambhajinagar`,
+  alt: `${siteConfig.name}: we build your website and grow your business online`,
 }
 
 /**

@@ -13,30 +13,30 @@ export function PhoneFrame({ children, className }: { children: ReactNode; class
   )
 }
 
-type MenuRow = { name: string; price: string; veg: boolean }
+type PreviewRow = { name: string; price: string; veg?: boolean }
 
-const defaultMenu: MenuRow[] = [
-  { name: "Paneer Tikka", price: "₹260", veg: true },
-  { name: "Chicken Biryani", price: "₹320", veg: false },
-  { name: "Masala Dosa", price: "₹140", veg: true },
+const defaultItems: PreviewRow[] = [
+  { name: "Featured product", price: "₹1,200" },
+  { name: "Best seller", price: "₹850" },
+  { name: "New arrival", price: "₹2,400" },
 ]
 
-/** Illustrated restaurant site shown inside PhoneFrame (until real screenshots exist). */
+/** Illustrated website shown inside PhoneFrame (until real screenshots exist). */
 export function MiniSite({
   name,
   tint = "#f5d9b8",
-  cta = "Book a table",
-  menu = defaultMenu,
+  cta = "Enquire now",
+  items = defaultItems,
 }: {
   name: string
   tint?: string
   cta?: string
-  menu?: MenuRow[]
+  items?: PreviewRow[]
 }) {
   return (
     <div className="pt-6 text-[11px]" aria-hidden="true">
       <div className="flex items-center justify-between px-3 pb-2">
-        <span className="font-heading text-sm font-semibold">{name}</span>
+        <span className="truncate font-heading text-sm font-semibold">{name}</span>
         <span className="flex flex-col gap-0.5">
           <span className="h-0.5 w-3.5 rounded bg-ink" />
           <span className="h-0.5 w-3.5 rounded bg-ink" />
@@ -51,19 +51,21 @@ export function MiniSite({
         }}
       />
       <ul className="mt-2 divide-y px-3">
-        {menu.map((m) => (
+        {items.map((m) => (
           <li key={m.name} className="flex items-center gap-2 py-1.5">
-            <span
-              className={cn("grid size-2.5 shrink-0 place-items-center border", m.veg ? "border-veg" : "border-nonveg")}
-            >
-              <span className={cn("size-1 rounded-full", m.veg ? "bg-veg" : "bg-nonveg")} />
-            </span>
+            {m.veg !== undefined ? (
+              <span className={cn("grid size-2.5 shrink-0 place-items-center border", m.veg ? "border-veg" : "border-nonveg")}>
+                <span className={cn("size-1 rounded-full", m.veg ? "bg-veg" : "bg-nonveg")} />
+              </span>
+            ) : (
+              <span className="size-2.5 shrink-0 rounded-sm" style={{ backgroundColor: tint }} />
+            )}
             <span className="flex-1 truncate font-medium">{m.name}</span>
             <span className="text-muted-foreground">{m.price}</span>
           </li>
         ))}
       </ul>
-      <div className="m-3 mt-1 rounded-full bg-brand py-2 text-center font-semibold text-white">{cta}</div>
+      <div className="m-3 mt-1 rounded-full bg-ember py-2 text-center font-semibold text-night">{cta}</div>
     </div>
   )
 }

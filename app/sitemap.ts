@@ -11,8 +11,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   return [
     { url: url("/"), lastModified: now, changeFrequency: "weekly", priority: 1 },
+    { url: url("/services/"), lastModified: now, changeFrequency: "monthly", priority: 0.9 },
     { url: url("/demos/"), lastModified: now, changeFrequency: "monthly", priority: 0.9 },
-    { url: url("/qr-ordering/"), lastModified: now, changeFrequency: "monthly", priority: 0.9 },
+    { url: url("/how-it-works/"), lastModified: now, changeFrequency: "monthly", priority: 0.7 },
+    { url: url("/contact/"), lastModified: now, changeFrequency: "yearly", priority: 0.8 },
+    { url: url("/faq/"), lastModified: now, changeFrequency: "monthly", priority: 0.7 },
+    { url: url("/qr-ordering/"), lastModified: now, changeFrequency: "monthly", priority: 0.7 },
     ...cities.map((c) => ({
       url: url(`/website-development/${c.slug}/`),
       lastModified: now,

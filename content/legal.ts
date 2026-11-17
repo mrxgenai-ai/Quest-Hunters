@@ -12,7 +12,7 @@ export const privacy = {
     {
       heading: "What we collect",
       paragraphs: [
-        "When you send an enquiry, the details you type (name, restaurant name, phone number, plan interest and message) are placed into a WhatsApp message on your own device. Nothing is stored on this website's servers; you choose whether to send it.",
+        "When you send an enquiry, the details you type (name, business name, phone number, service interest and message) are placed into a WhatsApp message on your own device. Nothing is stored on this website's servers; you choose whether to send it.",
         "If analytics is switched on, Google Analytics collects anonymous usage data such as pages visited, device type and approximate location, using cookies.",
       ],
     },
@@ -53,13 +53,13 @@ export const terms = {
     {
       heading: "Demo websites",
       paragraphs: [
-        "The demo restaurants on this site are fictional and built by Quest Hunter to show what we can make. They are not client projects. Orders and bookings placed in demos are for demonstration only.",
+        "The demo businesses on this site are fictional and built by Quest Hunter to show what we can make. They are not client projects. Orders and bookings placed in demos are for demonstration only.",
       ],
     },
     {
       heading: "Timelines",
       paragraphs: [
-        "Timelines such as \"live in 7 days\" assume we receive your content (menu, photos, logo, approvals) on time. Your proposal states the timeline for your project.",
+        "Timelines such as \"live in 7 days\" assume we receive your content (products or services, photos, logo, approvals) on time. Your proposal states the timeline for your project.",
       ],
     },
     {

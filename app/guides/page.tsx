@@ -51,7 +51,7 @@ export default function GuidesPage() {
           ))}
         </ul>
         <SectionCTA>
-          <WhatsAppButton location="guides_index" message="Hi Quest Hunter, I have a question about my restaurant website." size="lg">
+          <WhatsAppButton location="guides_index" message="Hi Quest Hunter, I have a question about my business website." size="lg">
             Got a question we haven&apos;t covered? Ask us
           </WhatsAppButton>
         </SectionCTA>

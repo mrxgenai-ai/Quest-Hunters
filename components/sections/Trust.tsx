@@ -2,11 +2,11 @@ import { ArrowRight, MessageSquareQuote, Star } from "lucide-react"
 import { ButtonLink } from "@/components/Button"
 import { SectionCTA } from "@/components/CTA"
 import { Section, SectionHeader } from "@/components/Section"
-import { trust } from "@/content/home"
+import { trust } from "@/content/services"
 
 /**
  * Reviews and results. Shows an honest empty state until `trust.showReviews`
- * is switched on in content/home.ts with real, verifiable reviews.
+ * is switched on in content/services.ts with real, verifiable reviews.
  */
 export function Trust() {
   const hasContent = trust.showReviews && (trust.reviews.length > 0 || trust.results.length > 0)

@@ -13,7 +13,7 @@ import { Container, Eyebrow, Section, SectionHeader } from "@/components/Section
 import { WhatsAppButton } from "@/components/WhatsAppButton"
 import { siteConfig } from "@/config/site"
 import { cities } from "@/content/cities"
-import { homeFaqs } from "@/content/faqs"
+import { generalFaqs } from "@/content/faqs"
 import { guides } from "@/content/guides"
 import { plans } from "@/content/plans"
 import { pageMetadata } from "@/lib/metadata"
@@ -45,8 +45,8 @@ export default async function CityPage({ params }: Props) {
   const plan = plans.find((p) => p.id === city.recommended.planId) ?? plans[0]
   const otherCities = cities.filter((c) => c.slug !== city.slug)
   // City-specific questions first, then two general ones (GST, upgrades).
-  const faqs = [...city.faqs, ...homeFaqs.filter((f) => /GST|upgrade/i.test(f.q))]
-  const waMessage = `Hi Quest Hunter, I have a restaurant in ${city.name} and want a website.`
+  const faqs = [...city.faqs, ...generalFaqs]
+  const waMessage = `Hi Quest Hunter, I have a business in ${city.name} and want a website.`
   const url = `${siteConfig.url}/website-development/${city.slug}/`
 
   return (
@@ -81,7 +81,7 @@ export default async function CityPage({ params }: Props) {
         <div className="grid gap-10 lg:grid-cols-[1.3fr_1fr] lg:gap-16">
           <div data-reveal>
             <h2 id="city-intro-title" className="text-3xl leading-tight font-semibold sm:text-4xl">
-              Why restaurants in {city.name} need their own website
+              Why businesses in {city.name} need their own website
             </h2>
             {city.intro.map((p) => (
               <p key={p.slice(0, 24)} className="mt-5 text-lg text-pretty text-muted-foreground">
@@ -99,7 +99,7 @@ export default async function CityPage({ params }: Props) {
 
       {/* Local needs */}
       <Section labelledBy="needs-title">
-        <SectionHeader id="needs-title" eyebrow={`For ${city.name}`} title={`What we build for ${city.name} restaurants`} />
+        <SectionHeader id="needs-title" eyebrow={`For ${city.name}`} title={`What we build for ${city.name} businesses`} />
         <ul className="mt-12 grid gap-5 md:grid-cols-3">
           {city.needs.map((n, i) => (
             <li key={n.title} data-reveal className="rounded-2xl border bg-card p-6">
@@ -122,7 +122,7 @@ export default async function CityPage({ params }: Props) {
           <div>
             <SectionHeader id="rec-title" eyebrow="Where most start" title={`Our usual starting point in ${city.name}: ${plan.name}`} subtitle={city.recommended.why} />
             <p data-reveal className="mt-6">
-              <Link href="/#plans" className="inline-flex items-center gap-1 py-1 font-semibold text-brand-strong underline-offset-4 hover:underline">
+              <Link href="/services/#build" className="inline-flex items-center gap-1 py-1 font-semibold text-brand-strong underline-offset-4 hover:underline">
                 Compare all three plans <ArrowRight className="size-4" aria-hidden="true" />
               </Link>
             </p>
@@ -169,8 +169,8 @@ export default async function CityPage({ params }: Props) {
             <SectionHeader
               id="city-contact-title"
               eyebrow="Free demo"
-              title={`Get a free demo for your ${city.name} restaurant`}
-              subtitle="Leave your number and we'll WhatsApp you within 2 hours (10am–8pm)."
+              title={`Get a free demo for your ${city.name} business`}
+              subtitle="Leave your number and we'll WhatsApp you within 2 hours (10am–8pm IST)."
             />
             <div data-reveal className="mt-10 space-y-6">
               <div>
@@ -200,7 +200,7 @@ export default async function CityPage({ params }: Props) {
             </div>
           </div>
           <div data-reveal className="rounded-3xl border bg-card p-5 sm:p-8">
-            <ContactForm source={`city_${city.slug}`} messagePlaceholder={`Your restaurant's area in ${city.name}, type of place, what you'd like…`} />
+            <ContactForm source={`city_${city.slug}`} messagePlaceholder={`Your area in ${city.name}, type of business, what you'd like…`} />
           </div>
         </div>
       </Section>
@@ -209,8 +209,8 @@ export default async function CityPage({ params }: Props) {
         data={{
           "@context": "https://schema.org",
           "@type": "Service",
-          name: `Restaurant website development in ${city.name}`,
-          serviceType: "Restaurant website development",
+          name: `Website development in ${city.name}`,
+          serviceType: "Website development",
           url,
           description: city.metaDescription,
           provider: { "@id": `${siteConfig.url}/#organization`, "@type": "Organization", name: siteConfig.name, url: siteConfig.url },

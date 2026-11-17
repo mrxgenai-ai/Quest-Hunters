@@ -1,5 +1,9 @@
 import { siteConfig } from "@/config/site"
-import { plans, qrAddon } from "@/content/plans"
+import { addons, plans } from "@/content/plans"
+import { chapterOne } from "@/content/home"
+import { growServices } from "@/content/services"
+
+const [founder, ...crew] = chapterOne.team
 
 const orgId = `${siteConfig.url}/#organization`
 
@@ -15,7 +19,7 @@ export function organizationSchema() {
     email: siteConfig.email,
     telephone: `+${siteConfig.whatsappNumber}`,
     description:
-      "Website development for restaurants, cafes, cloud kitchens and resorts: table booking, online ordering and table QR ordering.",
+      "Website development and online growth for startups, retail stores, restaurants and service businesses: websites, online stores, social media management and WhatsApp and email automation. Local in Chhatrapati Sambhajinagar, remote worldwide.",
     address: {
       "@type": "PostalAddress",
       addressLocality: address.locality,
@@ -25,7 +29,8 @@ export function organizationSchema() {
       ...(address.postalCode ? { postalCode: address.postalCode } : {}),
     },
     areaServed: siteConfig.areaServed.map((name) => ({ "@type": "Place", name })),
-    founder: { "@type": "Person", name: "Mudassir Shaikh" },
+    founder: { "@type": "Person", name: founder.name, jobTitle: founder.role },
+    employee: crew.map((m) => ({ "@type": "Person", name: m.name, jobTitle: m.role })),
     ...(siteConfig.social.instagram ? { sameAs: [siteConfig.social.instagram] } : {}),
   }
 }
@@ -44,28 +49,39 @@ function offer(price: number, description?: string) {
   }
 }
 
-/** One Service entry per plan, plus the QR ordering add-on. */
-export function planServicesSchema() {
+/** BUILD plans and priced add-ons as Services with offers, plus the GROW services (no prices yet). */
+export function servicesSchema() {
+  const areaServed = siteConfig.areaServed.map((name) => ({ "@type": "Place", name }))
   return {
     "@context": "https://schema.org",
     "@graph": [
       ...plans.map((p) => ({
         "@type": "Service",
-        name: `${p.name} restaurant website`,
-        serviceType: "Restaurant website development",
+        name: `${p.name} website`,
+        serviceType: "Website development",
         description: `${p.promise}. Includes: ${p.features.join(", ")}. Live in ${p.timeline}.`,
         provider: { "@id": orgId },
-        areaServed: siteConfig.areaServed.map((name) => ({ "@type": "Place", name })),
+        areaServed,
         offers: offer(p.priceFrom),
       })),
-      {
+      ...addons.map((a) => ({
         "@type": "Service",
-        name: qrAddon.name,
-        serviceType: "Restaurant table QR ordering system",
-        description: qrAddon.promise,
+        name: a.name,
+        serviceType: a.name,
+        description: a.promise,
         provider: { "@id": orgId },
-        offers: offer(qrAddon.priceFrom, `Plus ₹${qrAddon.monthly}/month`),
-      },
+        ...(a.priceFrom !== null
+          ? { offers: offer(a.priceFrom, a.monthly ? `Plus ₹${a.monthly}/month` : undefined) }
+          : {}),
+      })),
+      ...growServices.map((g) => ({
+        "@type": "Service",
+        name: g.title,
+        serviceType: g.title,
+        description: `${g.desc} Includes: ${g.items.join(", ")}.`,
+        provider: { "@id": orgId },
+        areaServed,
+      })),
     ],
   }
 }

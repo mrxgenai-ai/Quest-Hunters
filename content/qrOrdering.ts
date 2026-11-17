@@ -1,17 +1,17 @@
 import type { Faq } from "./faqs"
 
 export const qrPage = {
-  metaTitle: "Table QR Ordering System for Restaurants",
+  metaTitle: "QR Ordering for Restaurants, Cafés & Hotels",
   metaDescription:
-    "Guests scan the QR on their table, order from their phone and track the status live. No app to install. Owner console and kitchen screen included. From ₹15,000 + ₹999/month.",
+    "Customers scan a QR code at their table, room or counter, order from their phone and track it live. No app. From ₹15,000 + ₹999/month.",
 
   hero: {
-    eyebrow: "Table QR Ordering",
+    eyebrow: "QR Ordering add-on",
     title: "Scan. Order. Served. No app needed.",
     subtitle:
-      "Guests scan the QR code on their table, order from their own phone and watch the status update live. Your kitchen sees every order the moment it's placed.",
+      "Customers scan the QR code at their table, room or counter, order from their own phone and watch the status update live. Your team sees every order the moment it's placed. Made for restaurants, cafés, hotels, food courts and any counter with a queue.",
     demoSlug: "spice-table",
-    points: ["Works in any phone browser", "Veg / non-veg tags & photos", "Hindi, Marathi or English menu"],
+    points: ["Works in any phone browser", "Photos, tags & options", "Any language, including Hindi and Marathi"],
   },
 
   journey: {
@@ -90,8 +90,8 @@ export const qrPage = {
 
   enquiry: {
     eyebrow: "Get started",
-    title: "Want QR ordering for your restaurant?",
-    subtitle: "Tell us how many tables you have. We'll WhatsApp you a free demo with your own menu.",
+    title: "Want QR ordering for your business?",
+    subtitle: "Tell us how many tables, rooms or counters you have. We'll WhatsApp you a free demo with your own menu.",
   },
 }
 
@@ -122,6 +122,6 @@ export const qrFaqs: Faq[] = [
   },
   {
     q: "Can I get QR ordering without a full website?",
-    a: "It's designed as an add-on to any Quest Hunter plan, so your QR menu and website share one menu. If you only want QR ordering, message us and we'll suggest the simplest setup.",
+    a: "It's designed as an add-on to any Quest Hunter website plan, so your QR menu and website share one menu. If you only want QR ordering, message us and we'll suggest the simplest setup.",
   },
 ]

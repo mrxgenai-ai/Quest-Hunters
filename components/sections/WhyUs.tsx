@@ -1,12 +1,12 @@
-import { ArrowRight, BadgePercent, KeyRound, MapPin, UtensilsCrossed, type LucideIcon } from "lucide-react"
+import { ArrowRight, BadgePercent, KeyRound, MapPin, MessageCircle, type LucideIcon } from "lucide-react"
 import { ButtonLink } from "@/components/Button"
 import { SectionCTA } from "@/components/CTA"
 import { Section, SectionHeader } from "@/components/Section"
-import { whyUs } from "@/content/home"
+import { whyUs } from "@/content/services"
 
 const icons: Record<string, LucideIcon> = {
   key: KeyRound,
-  utensils: UtensilsCrossed,
+  message: MessageCircle,
   "map-pin": MapPin,
   "badge-percent": BadgePercent,
 }
@@ -32,8 +32,8 @@ export function WhyUs() {
         })}
       </ul>
       <SectionCTA>
-        <ButtonLink href="/#contact" size="lg">
-          Get a free demo <ArrowRight aria-hidden="true" />
+        <ButtonLink href="/contact/" size="lg">
+          Start your quest <ArrowRight aria-hidden="true" />
         </ButtonLink>
       </SectionCTA>
     </Section>

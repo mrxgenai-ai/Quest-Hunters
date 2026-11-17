@@ -1,23 +1,21 @@
 import Image from "next/image"
 import { ArrowUpRight, Check } from "lucide-react"
-import type { Demo, DemoCategory } from "@/content/demos"
+import { businessTypes, demoPlans, type Demo } from "@/content/demos"
 import { cn } from "@/lib/utils"
 import { buttonStyles } from "./Button"
+import { DemoTilt } from "./effects/DemoTilt"
 import { MiniSite, PhoneFrame } from "./PhoneFrame"
 import { TrackedLink } from "./TrackedLink"
 
-const ctaByCategory: Record<DemoCategory, string> = {
-  Basic: "View menu",
-  Automation: "Book a table",
-  "E-commerce": "Order now",
-  "QR Ordering": "Order to table",
-}
+const typeLabel = (d: Demo) => businessTypes.find((t) => t.id === d.businessType)?.label ?? d.kind
+const planLabel = (d: Demo) => demoPlans.find((p) => p.id === d.plan)?.label ?? d.plan
 
 export function DemoCard({ demo, headingLevel = "h3" }: { demo: Demo; headingLevel?: "h2" | "h3" }) {
   const Heading = headingLevel
   return (
     <article data-reveal className="group flex flex-col overflow-hidden rounded-2xl border bg-card">
-      <div className="relative flex justify-center overflow-hidden px-8 pt-8" style={{ backgroundColor: `${demo.tint}66` }}>
+      <DemoTilt height={300}>
+      <div className="relative flex h-full justify-center overflow-hidden px-8 pt-8" style={{ backgroundColor: `${demo.tint}66` }}>
         <PhoneFrame className="w-[62%] max-w-[210px] translate-y-6 transition-transform duration-300 group-hover:translate-y-3">
           {demo.image ? (
             <div className="relative aspect-[9/16]">
@@ -30,16 +28,20 @@ export function DemoCard({ demo, headingLevel = "h3" }: { demo: Demo; headingLev
               />
             </div>
           ) : (
-            <MiniSite name={demo.name} tint={demo.tint} cta={ctaByCategory[demo.category]} menu={demo.menu} />
+            <MiniSite name={demo.name} tint={demo.tint} cta={demo.previewCta} items={demo.items} />
           )}
         </PhoneFrame>
-        <span className="absolute top-4 left-4 rounded-full bg-card px-3 py-1 text-xs font-semibold text-brand-strong shadow-sm">
-          {demo.category}
+        <span className="absolute top-4 left-4 flex flex-wrap gap-1.5">
+          <span className="rounded-full bg-card px-3 py-1 text-xs font-semibold text-brand-strong shadow-sm">{planLabel(demo)}</span>
+          {demo.addon && (
+            <span className="rounded-full bg-card px-3 py-1 text-xs font-semibold text-foreground shadow-sm">+ {demo.addon}</span>
+          )}
         </span>
       </div>
+      </DemoTilt>
       <div className="flex flex-1 flex-col p-5 sm:p-6">
         <Heading className="text-2xl font-semibold">{demo.name}</Heading>
-        <p className="text-sm text-muted-foreground">{demo.kind}</p>
+        <p className="text-sm text-muted-foreground">{typeLabel(demo)}</p>
         <ul className="mt-4 flex-1 space-y-2 text-sm">
           {demo.features.map((f) => (
             <li key={f} className="flex gap-2">
@@ -52,7 +54,7 @@ export function DemoCard({ demo, headingLevel = "h3" }: { demo: Demo; headingLev
           href={demo.url}
           external
           event="demo_open"
-          params={{ demo: demo.slug, category: demo.category }}
+          params={{ demo: demo.slug, category: demo.businessType, plan: demo.plan }}
           className={cn(buttonStyles({ variant: "dark" }), "mt-6 w-full")}
         >
           Open live demo <ArrowUpRight aria-hidden="true" />

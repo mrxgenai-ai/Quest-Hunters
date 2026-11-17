@@ -1,33 +1,21 @@
 import Link from "next/link"
 import { Check, Clock } from "lucide-react"
-import { categorySlug } from "@/content/demos"
-import type { Plan, PlanId } from "@/content/plans"
-import { formatINR } from "@/lib/utils"
-import { whatsappLink } from "@/lib/whatsapp"
+import type { Plan } from "@/content/plans"
 import { cn } from "@/lib/utils"
+import { whatsappLink } from "@/lib/whatsapp"
 import { buttonStyles } from "./Button"
+import { GlowCard } from "./effects/GlowCard"
+import { Price } from "./Price"
 import { TrackedLink } from "./TrackedLink"
 import { WhatsAppIcon } from "./icons"
-
-const demoHash: Record<PlanId, string> = {
-  basic: categorySlug.Basic,
-  automation: categorySlug.Automation,
-  ecommerce: categorySlug["E-commerce"],
-}
 
 export function PlanCard({ plan }: { plan: Plan }) {
   const featured = plan.featured
   return (
-    <article
-      data-reveal
-      aria-labelledby={`plan-${plan.id}`}
-      className={cn(
-        "relative flex flex-col rounded-2xl border p-6 sm:p-7",
-        featured ? "border-ink bg-ink text-white shadow-xl shadow-black/15" : "bg-card",
-      )}
-    >
+    <GlowCard dark={featured} data-reveal className="flex h-full">
+    <article aria-labelledby={`plan-${plan.id}`} className="relative flex flex-1 flex-col p-6 sm:p-7">
       {featured && (
-        <span className="absolute -top-3 left-6 rounded-full bg-brand px-3 py-1 text-xs font-bold tracking-wide text-white uppercase">
+        <span className="mb-3 w-fit rounded-full bg-ember px-3 py-1 font-mono text-[11px] font-bold tracking-wide text-night uppercase">
           Most popular
         </span>
       )}
@@ -38,8 +26,7 @@ export function PlanCard({ plan }: { plan: Plan }) {
 
       <p className="mt-6 flex items-baseline gap-1.5">
         <span className={cn("text-sm", featured ? "text-white/75" : "text-muted-foreground")}>From</span>
-        <span className="font-heading text-4xl font-semibold">{formatINR(plan.priceFrom)}</span>
-        <span className={cn("text-sm", featured ? "text-white/75" : "text-muted-foreground")}>+ GST</span>
+        <Price inr={plan.priceFrom} usdKey={plan.id} amountClassName="font-heading text-4xl font-semibold" />
       </p>
       <p
         className={cn(
@@ -48,6 +35,10 @@ export function PlanCard({ plan }: { plan: Plan }) {
         )}
       >
         <Clock className="size-3.5" aria-hidden="true" /> Live in {plan.timeline}
+      </p>
+
+      <p className={cn("mt-4 text-sm", featured ? "text-white/85" : "text-foreground")}>
+        <span className="font-semibold">Best for:</span> {plan.bestFor}
       </p>
 
       <ul className={cn("mt-6 flex-1 space-y-2.5 border-t pt-6 text-sm", featured && "border-white/15")}>
@@ -60,7 +51,7 @@ export function PlanCard({ plan }: { plan: Plan }) {
       </ul>
 
       <TrackedLink
-        href={whatsappLink(`Hi Quest Hunter, I'm interested in the ${plan.name} plan for my restaurant.`)}
+        href={whatsappLink(`Hi Quest Hunter, I'm interested in the ${plan.name} website plan for my business.`)}
         external
         event="plan_click"
         params={{ plan: plan.id }}
@@ -69,7 +60,7 @@ export function PlanCard({ plan }: { plan: Plan }) {
         <WhatsAppIcon /> Choose {plan.name}
       </TrackedLink>
       <Link
-        href={`/demos/#${demoHash[plan.id]}`}
+        href={`/demos/#plan=${plan.id}`}
         className={cn(
           "mt-3 py-2 text-center text-sm font-medium underline-offset-4 hover:underline",
           featured ? "text-white/85" : "text-muted-foreground",
@@ -78,5 +69,6 @@ export function PlanCard({ plan }: { plan: Plan }) {
         See the {plan.name} demo
       </Link>
     </article>
+    </GlowCard>
   )
 }

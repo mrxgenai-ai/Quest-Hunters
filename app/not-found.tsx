@@ -13,9 +13,9 @@ export default function NotFound() {
   return (
     <Container className="py-28 text-center sm:py-36">
       <p className="text-xs font-bold tracking-[0.16em] text-brand-strong uppercase">404</p>
-      <h1 className="mx-auto mt-3 max-w-xl text-4xl font-semibold sm:text-5xl">This page isn&apos;t on the menu.</h1>
+      <h1 className="mx-auto mt-3 max-w-xl text-4xl font-semibold sm:text-5xl">This page wandered off the map.</h1>
       <p className="mx-auto mt-4 max-w-md text-muted-foreground">
-        The link may be old, or the page is still being cooked. Try the home page or message us.
+        The link may be old, or the page hasn&apos;t been written yet. Head back to the start or message us.
       </p>
       <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
         <ButtonLink href="/" size="lg">

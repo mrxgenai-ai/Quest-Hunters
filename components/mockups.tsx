@@ -93,7 +93,7 @@ export function GuestCart() {
         <span>Total</span>
         <span>₹740</span>
       </div>
-      <div className="mt-2.5 rounded-full bg-brand py-2 text-center font-semibold text-white">Place order</div>
+      <div className="mt-2.5 rounded-full bg-ember py-2 text-center font-semibold text-night">Place order</div>
     </div>
   )
 }
@@ -112,12 +112,12 @@ export function GuestStatus() {
         {steps.map((s, i) => (
           <li key={s.label} className="relative flex gap-2.5 pb-3.5">
             {i < steps.length - 1 && (
-              <span className={cn("absolute top-4 left-[7px] h-full w-0.5", s.done ? "bg-brand" : "bg-border")} />
+              <span className={cn("absolute top-4 left-[7px] h-full w-0.5", s.done ? "bg-ember" : "bg-border")} />
             )}
             <span
               className={cn(
                 "relative z-10 grid size-4 shrink-0 place-items-center rounded-full",
-                s.done ? "bg-brand text-white" : "border-2 border-border bg-card",
+                s.done ? "bg-ember text-night" : "border-2 border-border bg-card",
                 s.current && "ring-4 ring-brand/20",
               )}
             >
@@ -177,7 +177,7 @@ export function ConsoleMock() {
               <li key={m.name} className="flex items-center gap-2 p-2.5">
                 <span className={cn("flex-1 truncate", !m.on && "text-muted-foreground line-through")}>{m.name}</span>
                 <span className="text-muted-foreground">{m.price}</span>
-                <span className={cn("flex h-4 w-7 items-center rounded-full p-0.5", m.on ? "justify-end bg-brand" : "bg-border")}>
+                <span className={cn("flex h-4 w-7 items-center rounded-full p-0.5", m.on ? "justify-end bg-ember" : "bg-border")}>
                   <span className="size-3 rounded-full bg-white" />
                 </span>
               </li>
@@ -196,7 +196,7 @@ export function ConsoleMock() {
 
 export function KitchenMock() {
   const cols = [
-    { title: "New", tone: "bg-brand", tickets: [{ t: 3, items: ["Veg Manchurian", "Jeera Rice"], note: "" }] },
+    { title: "New", tone: "bg-ember", tickets: [{ t: 3, items: ["Veg Manchurian", "Jeera Rice"], note: "" }] },
     { title: "Preparing", tone: "bg-amber-500", tickets: [{ t: 7, items: ["Chicken 65", "Paneer Tikka ×2"], note: "Less spicy" }] },
     { title: "Ready", tone: "bg-green-600", tickets: [{ t: 12, items: ["Masala Chai ×4"], note: "" }] },
   ]

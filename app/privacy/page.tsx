@@ -5,7 +5,7 @@ import { pageMetadata } from "@/lib/metadata"
 
 export const metadata: Metadata = pageMetadata({
   title: privacy.metaTitle,
-  description: "How Quest Hunter handles information sent through this website.",
+  description: "How Quest Hunter handles the information you send through this website: enquiries on WhatsApp, analytics and your rights.",
   path: "/privacy/",
 })
 

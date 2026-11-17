@@ -98,7 +98,7 @@ export default async function GuidePage({ params }: Props) {
           </div>
 
           <aside className="mt-14 rounded-3xl bg-ink p-7 text-white sm:p-9">
-            <h2 className="text-2xl font-semibold sm:text-3xl">Want this done for your restaurant?</h2>
+            <h2 className="text-2xl font-semibold sm:text-3xl">Want this done for your business?</h2>
             <p className="mt-3 text-white/75">We set it all up for you, usually live in 7 days. Start with a free demo.</p>
             <div className="mt-6 flex flex-col gap-3 sm:flex-row">
               <ButtonLink href={guide.cta.href} variant="light" size="lg">

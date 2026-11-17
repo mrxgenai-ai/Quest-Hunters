@@ -1,32 +1,110 @@
 "use client"
 
 import { useCallback, useEffect, useState } from "react"
-import { categorySlug, demoCategories, type DemoCategory } from "@/content/demos"
+import { businessTypes, demoPlans, demosPage } from "@/content/demos"
 import { cn } from "@/lib/utils"
 
-type Filter = "All" | DemoCategory
+type State = { type: string; plan: string }
+const ALL = "all"
 
-const fromHash = (hash: string): Filter =>
-  (Object.entries(categorySlug).find(([, slug]) => `#${slug}` === hash)?.[0] as DemoCategory | undefined) ?? "All"
+/** Reads deep links like /demos/#type=clothing&plan=ecommerce (also #plan=basic). */
+function fromHash(hash: string): State {
+  const p = new URLSearchParams(hash.replace(/^#/, ""))
+  const type = p.get("type") ?? ALL
+  const plan = p.get("plan") ?? ALL
+  return {
+    type: businessTypes.some((t) => t.id === type) ? type : ALL,
+    plan: demoPlans.some((x) => x.id === plan) ? plan : ALL,
+  }
+}
+
+function toHash({ type, plan }: State) {
+  const p = new URLSearchParams()
+  if (type !== ALL) p.set("type", type)
+  if (plan !== ALL) p.set("plan", plan)
+  const s = p.toString()
+  return s ? `#${s}` : ""
+}
+
+function Chips({
+  label,
+  options,
+  value,
+  counts,
+  gridId,
+  onChoose,
+}: {
+  label: string
+  options: { id: string; label: string }[]
+  value: string
+  counts: Record<string, number>
+  gridId: string
+  onChoose: (id: string) => void
+}) {
+  const all = [{ id: ALL, label: demosPage.filters.all }, ...options]
+  return (
+    <div className="flex min-w-0 flex-col gap-2 sm:flex-row sm:items-center sm:gap-4">
+      <p id={`${gridId}-${label}`} className="w-32 shrink-0 text-xs font-bold tracking-[0.16em] text-muted-foreground uppercase">
+        {label}
+      </p>
+      <div
+        role="group"
+        aria-labelledby={`${gridId}-${label}`}
+        className="-mx-4 flex min-w-0 gap-2 overflow-x-auto px-4 pb-1 sm:mx-0 sm:flex-wrap sm:px-0"
+      >
+        {all.map((o) => (
+          <button
+            key={o.id}
+            type="button"
+            aria-pressed={value === o.id}
+            aria-controls={gridId}
+            onClick={() => onChoose(o.id)}
+            className={cn(
+              "inline-flex h-11 shrink-0 items-center gap-2 rounded-full border px-5 text-sm font-semibold transition-colors",
+              value === o.id ? "border-ink bg-ink text-white" : "border-input bg-card hover:bg-muted",
+            )}
+          >
+            {o.label}
+            <span className={cn("text-xs tabular-nums", value === o.id ? "text-white/70" : "text-muted-foreground")}>
+              {counts[o.id] ?? 0}
+            </span>
+          </button>
+        ))}
+      </div>
+    </div>
+  )
+}
 
 /**
- * Filter chips for the demo grid. The cards themselves are server-rendered
- * (all visible without JS); this only toggles their `hidden` attribute.
+ * Two filter rows (business type, plan) for the demo grid. The cards are
+ * server-rendered and all visible without JS; this only toggles `hidden`.
  */
-export function DemoFilter({ gridId, counts }: { gridId: string; counts: Record<Filter, number> }) {
-  const [active, setActive] = useState<Filter>("All")
+export function DemoFilter({
+  gridId,
+  typeCounts,
+  planCounts,
+}: {
+  gridId: string
+  typeCounts: Record<string, number>
+  planCounts: Record<string, number>
+}) {
+  const [state, setState] = useState<State>({ type: ALL, plan: ALL })
+  const [shown, setShown] = useState<number | null>(null)
 
   const apply = useCallback(
-    (f: Filter) => {
-      setActive(f)
-      document.querySelectorAll<HTMLElement>(`#${gridId} > [data-category]`).forEach((el) => {
-        el.hidden = f !== "All" && el.dataset.category !== f
+    (s: State) => {
+      setState(s)
+      let n = 0
+      document.querySelectorAll<HTMLElement>(`#${gridId} > [data-type]`).forEach((el) => {
+        const match = (s.type === ALL || el.dataset.type === s.type) && (s.plan === ALL || el.dataset.plan === s.plan)
+        el.hidden = !match
+        if (match) n++
       })
+      setShown(n)
     },
     [gridId],
   )
 
-  // Support deep links like /demos/#automation (used by the plan cards).
   useEffect(() => {
     const sync = () => apply(fromHash(window.location.hash))
     sync()
@@ -34,37 +112,40 @@ export function DemoFilter({ gridId, counts }: { gridId: string; counts: Record<
     return () => window.removeEventListener("hashchange", sync)
   }, [apply])
 
-  function choose(f: Filter) {
-    apply(f)
-    const hash = f === "All" ? "" : `#${categorySlug[f]}`
-    history.replaceState(null, "", `${window.location.pathname}${hash}`)
+  function choose(next: State) {
+    apply(next)
+    history.replaceState(null, "", `${window.location.pathname}${toHash(next)}`)
   }
 
   return (
-    <div>
-      <div role="group" aria-label="Filter demos by plan" className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-2 sm:mx-0 sm:flex-wrap sm:px-0">
-        {demoCategories.map((c) => (
-          <button
-            key={c}
-            type="button"
-            aria-pressed={active === c}
-            aria-controls={gridId}
-            onClick={() => choose(c)}
-            className={cn(
-              "inline-flex h-11 shrink-0 items-center gap-2 rounded-full border px-5 text-sm font-semibold transition-colors",
-              active === c ? "border-ink bg-ink text-white" : "border-input bg-card hover:bg-muted",
-            )}
-          >
-            {c}
-            <span className={cn("text-xs tabular-nums", active === c ? "text-white/70" : "text-muted-foreground")}>
-              {counts[c]}
-            </span>
-          </button>
-        ))}
-      </div>
+    <div className="grid min-w-0 gap-4">
+      <Chips
+        label={demosPage.filters.typeLabel}
+        options={businessTypes}
+        value={state.type}
+        counts={typeCounts}
+        gridId={gridId}
+        onChoose={(type) => choose({ ...state, type })}
+      />
+      <Chips
+        label={demosPage.filters.planLabel}
+        options={demoPlans}
+        value={state.plan}
+        counts={planCounts}
+        gridId={gridId}
+        onChoose={(plan) => choose({ ...state, plan })}
+      />
       <p className="sr-only" aria-live="polite">
-        {active === "All" ? `Showing all ${counts.All} demos` : `Showing ${counts[active]} ${active} demo${counts[active] === 1 ? "" : "s"}`}
+        {shown === null ? "" : `Showing ${shown} demo${shown === 1 ? "" : "s"}`}
       </p>
+      {shown === 0 && (
+        <p className="rounded-xl border border-dashed p-4 text-sm text-muted-foreground">
+          No demo matches both filters yet.{" "}
+          <button type="button" onClick={() => choose({ type: ALL, plan: ALL })} className="font-semibold text-brand-strong underline underline-offset-4">
+            Show all demos
+          </button>
+        </p>
+      )}
     </div>
   )
 }

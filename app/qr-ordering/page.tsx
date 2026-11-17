@@ -25,7 +25,7 @@ export const metadata: Metadata = pageMetadata({
 
 const consoleIcons: Record<string, LucideIcon> = { list: ListOrdered, pencil: Pencil, toggle: CircleSlash, tag: Tag }
 const guestScreens = [GuestBrowse, GuestCart, GuestStatus]
-const qrWhatsApp = "Hi Quest Hunter, I'm interested in Table QR Ordering for my restaurant."
+const qrWhatsApp = "Hi Quest Hunter, I'm interested in QR ordering for my business."
 
 function priceLine() {
   return (
@@ -44,7 +44,7 @@ function DemoLink({ className, variant = "primary" }: { className?: string; vari
       href={demo.url}
       external
       event="demo_open"
-      params={{ demo: demo.slug, category: demo.category, location: "qr_page" }}
+      params={{ demo: demo.slug, category: demo.businessType, location: "qr_page" }}
       className={cn(buttonStyles({ variant, size: "lg" }), className)}
     >
       Try the {demo.name} demo <ArrowUpRight aria-hidden="true" />
@@ -117,7 +117,7 @@ export default function QrOrderingPage() {
                   </PhoneFrame>
                 </div>
                 <p className="mt-6 flex items-center gap-3">
-                  <span className="grid size-9 place-items-center rounded-full bg-brand font-heading font-semibold text-white">{i + 1}</span>
+                  <span className="grid size-9 place-items-center rounded-full bg-ember font-heading font-semibold text-night">{i + 1}</span>
                   <span className="font-heading text-2xl font-semibold">{s.title}</span>
                 </p>
                 <p className="mt-2 text-muted-foreground">{s.desc}</p>
@@ -234,7 +234,7 @@ export default function QrOrderingPage() {
           </div>
         </div>
         <SectionCTA>
-          <WhatsAppButton location="qr_pricing" message="Hi Quest Hunter, can I get a QR ordering quote for my restaurant?" size="lg">
+          <WhatsAppButton location="qr_pricing" message="Hi Quest Hunter, can I get a QR ordering quote for my business?" size="lg">
             Get an exact quote
           </WhatsAppButton>
         </SectionCTA>
@@ -261,9 +261,9 @@ export default function QrOrderingPage() {
           <SectionHeader id="enquire-title" eyebrow={enquiry.eyebrow} title={enquiry.title} subtitle={enquiry.subtitle} />
           <div data-reveal className="rounded-3xl border bg-background p-5 sm:p-8">
             <ContactForm
-              defaultPlan="Table QR Ordering"
+              defaultPlan="QR ordering"
               source="qr_ordering"
-              messagePlaceholder="Number of tables, type of restaurant, and anything else we should know…"
+              messagePlaceholder="Number of tables, rooms or counters, type of business, and anything else we should know…"
             />
           </div>
         </div>
@@ -276,7 +276,7 @@ export default function QrOrderingPage() {
             {
               "@type": "Service",
               name: qrAddon.name,
-              serviceType: "Restaurant table QR ordering system",
+              serviceType: "QR ordering system",
               description: qrPage.metaDescription,
               url: `${siteConfig.url}/qr-ordering/`,
               provider: { "@id": `${siteConfig.url}/#organization`, "@type": "Organization", name: siteConfig.name },

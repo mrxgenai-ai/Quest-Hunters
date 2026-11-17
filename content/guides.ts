@@ -21,12 +21,12 @@ export type Guide = {
 }
 
 export const guidesIntro = {
-  metaTitle: "Guides for Restaurant Owners",
+  metaTitle: "Guides for Business Owners",
   metaDescription:
-    "Plain-English guides for restaurant, café and cloud kitchen owners: getting found on Google, selling direct without commission, better menus and QR ordering.",
+    "Plain-English guides for business owners: getting found on Google, selling direct without commission, and our restaurant series on menus and QR ordering.",
   eyebrow: "Guides",
-  title: "Practical guides for restaurant owners.",
-  subtitle: "Short, plain-English answers to the questions owners ask us most. No jargon.",
+  title: "Practical guides for business owners.",
+  subtitle: "Short, plain-English answers to the questions owners ask us most. No jargon. This first series is for restaurants and cafés; more industries are coming.",
 }
 
 export const guides: Guide[] = [
@@ -49,9 +49,9 @@ export const guides: Guide[] = [
       { type: "ul", items: ["Orders from regulars with no commission", "Your customer list, so you can message them directly", "Your brand, photos and story, not a row in a list", "Table bookings and party enquiries, which apps don't handle well"] },
       { type: "h2", text: "How to use both" },
       { type: "p", text: "Keep the apps for discovery. Then give every app customer a reason to order direct next time: a small card in the bag with your website or WhatsApp QR, a direct-order discount, or a loyalty offer. Even moving a quarter of your repeat orders adds up quickly." },
-      { type: "tip", text: "Try the commission calculator on our home page with your own numbers to see what moving some orders direct is worth." },
+      { type: "tip", text: "Work out what you pay apps each month, then ask us what an E-commerce site would cost for you. The written proposal shows the exact numbers." },
     ],
-    cta: { label: "Open the commission calculator", href: "/#calculator" },
+    cta: { label: "Compare website plans", href: "/services/#build" },
   },
   {
     slug: "google-business-profile-for-restaurants",
@@ -74,7 +74,7 @@ export const guides: Guide[] = [
       { type: "p", text: "Ask happy guests for a review, for example with a QR code on the bill. Reply to every review, good or bad, politely and briefly. Never buy or fake reviews: it breaks Google's rules and customers can usually tell." },
       { type: "tip", text: "Every Quest Hunter plan includes Google Business Profile setup, linked to your new website." },
     ],
-    cta: { label: "See the plans", href: "/#plans" },
+    cta: { label: "See the services", href: "/services/" },
   },
   {
     slug: "restaurant-website-menu-checklist",
